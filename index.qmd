@@ -1,0 +1,63 @@
+# Muestreos PPT - UNAL 2026-2
+
+## Integrantes:
+
+### Sergio Alejandro Buitrago Melo
+
+### Camilo Andres Murcia Perdomo
+
+# Metodo 1: Sunder 
+
+# Metodo 2: Rao-Hartley-Cochran
+
+Para el segundo método tomaremos, de nuevo, una muestra de 12 individuos basado en nuestro dataframe.
+
+```{r}
+library(dplyr)
+set.seed(5) #seed para reproducibilidad, se elige el número 5 para manifestar esa nota
+
+poblacion <- read.csv("narino_poblacion_censo_2005_2018.csv")
+poblacion$id_municipio<- 1:length(poblacion$nombre_municipio) 
+head(poblacion[, c("id_municipio", "nombre_municipio", "poblacion_censo_2005")]) 
+
+n_muestra <- 12
+```
+
+(Preliminares del archivo, se establecen las variables que vamos a usar y se fija el n)
+
+Se crea un vector de indices, con estos indices se establecran grupos aleatorios de tamaño similar:
+
+```{r}
+indices <- sample(1:length(poblacion$id_municipio))  
+
+grupos <- split(indices, cut(seq_along(indices), breaks = n_muestra, labels = FALSE))
+
+```
+
+Estos grupos se usaran para: Dentro de cada uno de estos 12 grupos se va a elegir un solo individuo aleatoriamente basado en su tamaño, así, eligiendo una muestra de 12.
+
+```{r}
+
+seleccionados <- numeric(n_muestra) 
+
+
+for (i in 1:n_muestra) {
+  grupo_actual <- grupos[[i]]
+  tamanos_grupo <- poblacion$poblacion_censo_2005[grupo_actual]
+  prob <- tamanos_grupo / sum(tamanos_grupo)
+  seleccionados[i] <- sample(grupo_actual, size = 1, prob = prob)
+}
+
+ seleccionados
+
+muestra_final <- poblacion %>%
+  filter(id_municipio %in% seleccionados) 
+
+```
+
+Es asì como obtenemos nuestra muestra final del método RHC
+
+```{r}
+
+muestra_final
+```
