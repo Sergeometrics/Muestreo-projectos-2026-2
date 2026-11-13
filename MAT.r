@@ -15,3 +15,20 @@ muestra
 
 
 
+
+X_total <- sum(datos$poblacion_censo_2005)
+x_sel   <- datos$poblacion_censo_2005[seleccion]
+y_sel   <- datos$poblacion_censo_2018[seleccion]
+Z       <- y_sel / (x_sel / X_total)   # y_i / p_i
+
+total_estimado     <- mean(Z)          # (1/n) * sum(Z)
+varianza_estimada  <- var(Z) / n       # (1/(n(n-1))) * sum((Z - mean(Z))^2)
+error_estandar     <- sqrt(varianza_estimada)
+cve                <- (error_estandar / total_estimado) * 100
+
+total_estimado
+varianza_estimada
+error_estandar
+cve
+
+sum(datos$poblacion_censo_2018)

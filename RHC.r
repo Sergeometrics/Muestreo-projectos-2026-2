@@ -27,4 +27,26 @@ for (i in 1:n_muestra) {
 muestra_final <- poblacion %>%
   filter(id_municipio %in% seleccionados) 
 
-muestra_final
+muestra_final<- muestra_final %>%
+  select(id_municipio, nombre_municipio, poblacion_censo_2005, poblacion_censo_2018) 
+ muestra_final
+
+
+m <- n_muestra
+
+X_grupo <- sapply(grupos, function(g) sum(poblacion$poblacion_censo_2005[g]))
+x_sel   <- poblacion$poblacion_censo_2005[seleccionados]
+y_sel   <- poblacion$poblacion_censo_2018[seleccionados]
+Z       <- y_sel / (x_sel / X_grupo)   # y_i / p_i
+
+total_estimado     <- sum(Z)
+varianza_estimada  <- (m / (m - 1)) * sum((Z - mean(Z))^2)
+error_estandar     <- sqrt(varianza_estimada)
+cve                <- (error_estandar / total_estimado) * 100   # Coef. de variación estimado (%)
+
+total_estimado
+varianza_estimada
+error_estandar
+cve
+
+sum(poblacion$poblacion_censo_2018)  
