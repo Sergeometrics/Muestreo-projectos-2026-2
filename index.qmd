@@ -14,6 +14,20 @@ Los datos en sin modificaciones se pueden encontrar en los portales oficiales de
 
 # Metodo 1: Sunder
 
+Como primer método se realizará el algoritmo de sunter, para este método se eligió el formato .xlxs puesto que este permite mayor facilidad al momento de mostrar gráficamente la matriz de probabilidades de inclusion de segundo orden creada. Sin código que explicar, se realizara un resumen del método repasando al mismo tiempo como se construyó el documento.
+
+El archivo .xlxs donde se realizó este método de muestreo se puede descargar directamente en el siguiente link -\> <a href="Método Sunter.xlxs" download>Método Sunter.xlxs</a>, todo el procedimiento es igualmente explicado en este documento.
+
+El archivo se divide en 2 secciones, la primera siendo la base de datos de poblaciones de nariño sin filtrar:
+
+![](images/paste-1.png)
+
+Las variables a utilizar serán las poblaciones del censo 2005 y 2018.
+
+La segunda Página del .xlxs es la realizacion de la metodologia, dividida de la siguiente manera:
+
+![](images/paste-2.png)
+
 # Metodo 2: Rao-Hartley-Cochran (RHC)
 
 El archivo .r donde se realizó este método de muestreo se puede descargar directamente en el siguiente link -\> <a href="RHC.r" download>RHC.r</a>, todo el código es igualmente explicado en este documento.
