@@ -6,33 +6,51 @@
 
 ### Camilo Andres Murcia Perdomo
 
-# Introduccion:
+# Introducción:
 
-Este documento tiene como objetivo desarrollar 3 métodos de muestreo PPT, los datos utilizados son los microdatos del DANE correspondientes a los censos del 2005 y 2018, filtrados en base a nuestras variables de interes y al departamento asignado de Nariño.
+Este documento tiene como objetivo desarrollar 3 métodos de muestreo PPT (Sunter, Rao-Hartley-Cochran (RHC) y método acumulativo total (MAT)), los datos utilizados son los microdatos del DANE correspondientes a los censos del 2005 y 2018, filtrados en base a nuestras variables de interés y al departamento asignado de Nariño.
 
-Los datos en sin modificaciones se pueden encontrar en los portales oficiales del DANE y los datos fltrados que se usarán en este documento se pueden descargar directamente en este <a href="narino_poblacion_censo_2005_2018.csv" download>link</a>. De igual manera, de ser necesario se podra consultar el codigo fuente de este proyecto en el repositorio correspondiente.
+Los datos sin modificaciones se pueden encontrar en los portales oficiales del DANE y los datos filtrados que se usarán en este documento se pueden descargar directamente en este <a href="narino_poblacion_censo_2005_2018.csv" download>link</a>. De igual manera, de ser necesario se podrá consultar el código fuente de este proyecto en el repositorio correspondiente.
 
-# Metodo 1: Sunder
+# Método 1: Sunter
 
-Como primer método se realizará el algoritmo de sunter, para este método se eligió el formato .xlxs puesto que este permite mayor facilidad al momento de mostrar gráficamente la matriz de probabilidades de inclusion de segundo orden creada. Sin código que explicar, se realizara un resumen del método repasando al mismo tiempo como se construyó el documento.
+Como primer método se realizará el algoritmo de Sunter; para este método se eligió el formato .xlsx, puesto que este permite mayor facilidad al momento de mostrar gráficamente la matriz de probabilidades de inclusión de segundo orden creada. Sin código que explicar, se realizará un resumen del método repasando al mismo tiempo cómo se construyó el documento.
 
-El archivo .xlxs donde se realizó este método de muestreo se puede descargar directamente en el siguiente link -\> <a href="Método Sunter.xlxs" download>Método Sunter.xlxs</a>, todo el procedimiento es igualmente explicado en este documento.
+El archivo .xlsx donde se realizó este método de muestreo se puede descargar directamente en el siguiente link -\-> <a href="Método Sunter.xlxs" download>Método Sunter.xlxs</a>, todo el procedimiento es igualmente explicado en este documento.
 
-El archivo se divide en 2 secciones, la primera siendo la base de datos de poblaciones de nariño sin filtrar:
+El archivo se divide en 2 páginas: la primera es la base de datos de poblaciones de Nariño sin filtrar:
+
+### Página #1
 
 ![](images/paste-1.png)
 
 Las variables a utilizar serán las poblaciones del censo 2005 y 2018.
 
-La segunda Página del .xlxs es la realizacion de la metodologia, dividida de la siguiente manera:
+### Página #2
+
+La segunda página del .xlsx es la realización de la metodología, dividida de la siguiente manera:
 
 ![](images/paste-2.png)
 
-# Metodo 2: Rao-Hartley-Cochran (RHC)
+Una tabla principal donde se desarrolla el método paso a paso, calculando los $\pi_k$ de manera reiterada para cada selección de los individuos de inclusión forzosa y los correspondientes para las siguientes 2 "etapas" del método de Sunter.
+
+![](images/paste-3.png)
+
+Una segunda tabla con la muestra final obtenida, con su respectiva $y_k$ y $y_k/\pi_k$.
+
+![](images/paste-5.png)
+
+La matriz calculada de los $\pi_{kl}$ usando 5 distintos colores correspondientes a las 5 distintas fórmulas generales del método y la suma correspondiente de los valores de la diagonal. (Esta matriz se aprecia de mejor manera en el archivo .xlsx descargable <a href="Método Sunter.xlxs" download>acá</a>)
+
+![](images/paste-6.png)
+
+Finalmente, tenemos casillas donde se ubicaron los valores finales de las estimaciones y un intervalo de confianza al 95%.
+
+# Método 2: Rao-Hartley-Cochran (RHC)
 
 El archivo .r donde se realizó este método de muestreo se puede descargar directamente en el siguiente link -\> <a href="RHC.r" download>RHC.r</a>, todo el código es igualmente explicado en este documento.
 
-Para el segundo método tomaremos, de nuevo, una muestra de 12 individuos basado en nuestro dataframe.
+Para el segundo método tomaremos, de nuevo, una muestra de 12 individuos basada en nuestro dataframe.
 
 ```{r}
 library(dplyr)
@@ -47,7 +65,7 @@ n_muestra <- 12
 
 (Preliminares del archivo, se establecen las variables que vamos a usar y se fija el n)
 
-Se crea un vector de indices, con estos indices se establecran grupos aleatorios de tamaño similar:
+Se crea un vector de índices; con estos índices se establecerán grupos aleatorios de tamaño similar:
 
 ```{r}
 indices <- sample(1:length(poblacion$id_municipio))  
@@ -77,7 +95,7 @@ muestra_final <- poblacion %>%
 
 ```
 
-Es asì como obtenemos nuestra muestra final del método RHC
+Es así como obtenemos nuestra muestra final del método RHC
 
 ```{r}
 muestra_final<- muestra_final %>%
@@ -86,7 +104,7 @@ muestra_final<- muestra_final %>%
 
 ```
 
-Con nuestra muestra podemos seguir la formulas de los estimadores de total y de varianza de esta forma:
+Con nuestra muestra podemos seguir las fórmulas de los estimadores de total y de varianza de esta forma:
 
 ```{r}
 
@@ -104,7 +122,7 @@ cve                <- (error_estandar / total_estimado) * 100
                  
 ```
 
-Es asì que verificamos nuestros resultados:
+Es así que verificamos nuestros resultados:
 
 ```{r}
 
@@ -117,13 +135,20 @@ sum(poblacion$poblacion_censo_2018)
 
 ```
 
-Donde `sum(...)` nos indica el valor real publicado por el DANE
+Donde `sum(...)` nos indica el valor real publicado por el DANE.
 
-# Método 3: Metodo acumulativo Total (MAT)
+O comparado con el $IC$:
+
+```{r}
+IC_95 <- total_estimado + c(-1, 1) * 1.96 * error_estandar
+IC_95  
+```
+
+# Método 3: Método acumulativo total (MAT)
 
 El archivo .r donde se realizó este método de muestreo se puede descargar directamente en el siguiente link -\> <a href="MAT.r" download>MAT.r</a>, todo el código es igualmente explicado en este documento.
 
-El método acumulativo total será nuestro último método para hallar una muestra de tamaño 12, sin embargo, los preliminares de este método en R son parecidos al metodo anterior:
+El método acumulativo total será nuestro último método para hallar una muestra de tamaño 12; sin embargo, los preliminares de este método en R son parecidos al método anterior:
 
 ```{r}
 
@@ -134,7 +159,7 @@ set.seed(5)
 n <- 12
 ```
 
-(se usa `n <- 12`al igual que en RHC pues será el tamaño de la muestra)
+(se usa `n <- 12` al igual que en RHC, pues será el tamaño de la muestra)
 
 ```{r}
 tamano <- datos$poblacion_censo_2005
@@ -145,7 +170,7 @@ seleccion <- findInterval(puntos, c(0, cumsum(tamano)), rightmost.closed = TRUE)
 
 ```
 
-Se crearon objetos `tamano intervalo arranque puntos` y `seleccion` para usar la funcion `findinterval` la cual determinara nuestra seleccion, tal que:
+Se crearon objetos `tamano`, `intervalo`, `arranque`, `puntos` y `seleccion` para usar la función `findInterval`, la cual determinará nuestra selección, tal que:
 
 ```{r}
 muestra <- datos[seleccion, , drop = FALSE]
@@ -154,17 +179,17 @@ muestra
 
 ```
 
-Obteniendo asi nuestra muestra, con la cual calcularemos los estimados de total y varianza:
+Obteniendo así nuestra muestra, con la cual calcularemos los estimados de total y varianza:
 
 ```{r}
 
 X_total <- sum(datos$poblacion_censo_2005)
 x_sel   <- datos$poblacion_censo_2005[seleccion]
 y_sel   <- datos$poblacion_censo_2018[seleccion]
-Z       <- y_sel / (x_sel / X_total)   # y_i / p_i
+Z       <- y_sel / (x_sel / X_total)   
 
-total_estimado     <- mean(Z)          # (1/n) * sum(Z)
-varianza_estimada  <- var(Z) / n       # (1/(n(n-1))) * sum((Z - mean(Z))^2)
+total_estimado     <- mean(Z)          
+varianza_estimada  <- var(Z) / n       
 error_estandar     <- sqrt(varianza_estimada)
 cve                <- (error_estandar / total_estimado) * 100
 
@@ -180,9 +205,23 @@ error_estandar
 cve
 ```
 
-Comparable con nuestro total real:
+Comparado con nuestro total real:
 
 ```{r}
 
 sum(datos$poblacion_censo_2018)
 ```
+
+O con el $IC$:
+
+```{r}
+IC_95 <- total_estimado + c(-1, 1) * 1.96 * error_estandar
+IC_95
+
+```
+
+# Conclusiones y cierre:
+
+Tras elegir y evaluar las muestras se encontró que: en cualquiera de las metodologías usadas, nuestros intervalos de confianza al 95% cumplieron al tener el total real del censo de Nariño dentro. De igual manera, se puede verificar las diferencias entre los CVE de cada método, siendo el método de Sunter el más complejo pero retornando a cambio un coeficiente notablemente más bajo que los otros.
+
+Se exploraron 3 alternativas, cada una con sus peculiaridades y muestras obtenidas distintas; al tiempo, estas se desarrollaron en 2 herramientas de análisis y visualización de datos como lo es R (y sus respectivos IDE) y Excel (o equivalentes), dando así una visión más general y práctica de los algoritmos de selección estudiados, aportando a la comprensión de los temas de manera didáctica y aplicada a datos reales.

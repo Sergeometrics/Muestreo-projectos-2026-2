@@ -77,6 +77,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="index_files/libs/bootstrap/bootstrap-943e08653f4bd8ac7ab9292bfc489267.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -101,24 +130,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 </section>
 </section>
-<section id="introduccion" class="level1">
-<h1>Introduccion:</h1>
-<p>Este documento tiene como objetivo desarrollar 3 métodos de muestreo PPT, los datos utilizados son los microdatos del DANE correspondientes a los censos del 2005 y 2018, filtrados en base a nuestras variables de interes y al departamento asignado de Nariño.</p>
-<p>Los datos en sin modificaciones se pueden encontrar en los portales oficiales del DANE y los datos fltrados que se usarán en este documento se pueden descargar directamente en este <a href="narino_poblacion_censo_2005_2018.csv" download="">link</a>. De igual manera, de ser necesario se podra consultar el codigo fuente de este proyecto en el repositorio correspondiente.</p>
+<section id="introducción" class="level1">
+<h1>Introducción:</h1>
+<p>Este documento tiene como objetivo desarrollar 3 métodos de muestreo PPT (Sunter, Rao-Hartley-Cochran (RHC) y método acumulativo total (MAT)), los datos utilizados son los microdatos del DANE correspondientes a los censos del 2005 y 2018, filtrados en base a nuestras variables de interés y al departamento asignado de Nariño.</p>
+<p>Los datos sin modificaciones se pueden encontrar en los portales oficiales del DANE y los datos filtrados que se usarán en este documento se pueden descargar directamente en este <a href="narino_poblacion_censo_2005_2018.csv" download="">link</a>. De igual manera, de ser necesario se podrá consultar el código fuente de este proyecto en el repositorio correspondiente.</p>
 </section>
-<section id="metodo-1-sunder" class="level1">
-<h1>Metodo 1: Sunder</h1>
-<p>Como primer método se realizará el algoritmo de sunter, para este método se eligió el formato .xlxs puesto que este permite mayor facilidad al momento de mostrar gráficamente la matriz de probabilidades de inclusion de segundo orden creada. Sin código que explicar, se realizara un resumen del método repasando al mismo tiempo como se construyó el documento.</p>
-<p>El archivo .xlxs donde se realizó este método de muestreo se puede descargar directamente en el siguiente link -&gt; <a href="Método Sunter.xlxs" download="">Método Sunter.xlxs</a>, todo el procedimiento es igualmente explicado en este documento.</p>
-<p>El archivo se divide en 2 secciones, la primera siendo la base de datos de poblaciones de nariño sin filtrar:<img src="images/paste-1.png" class="img-fluid"></p>
+<section id="método-1-sunter" class="level1">
+<h1>Método 1: Sunter</h1>
+<p>Como primer método se realizará el algoritmo de Sunter; para este método se eligió el formato .xlsx, puesto que este permite mayor facilidad al momento de mostrar gráficamente la matriz de probabilidades de inclusión de segundo orden creada. Sin código que explicar, se realizará un resumen del método repasando al mismo tiempo cómo se construyó el documento.</p>
+<p>El archivo .xlsx donde se realizó este método de muestreo se puede descargar directamente en el siguiente link --&gt; <a href="Método Sunter.xlxs" download="">Método Sunter.xlxs</a>, todo el procedimiento es igualmente explicado en este documento.</p>
+<p>El archivo se divide en 2 páginas: la primera es la base de datos de poblaciones de Nariño sin filtrar:</p>
+<section id="página-1" class="level3">
+<h3 class="anchored" data-anchor-id="página-1">Página #1</h3>
+<p><img src="images/paste-1.png" class="img-fluid"></p>
 <p>Las variables a utilizar serán las poblaciones del censo 2005 y 2018.</p>
-<p>La segunda Página del .xlxs es la realizacion de la metodologia, dividida de la siguiente manera:</p>
-<p><img src="images/paste-2.png" class="img-fluid"></p>
 </section>
-<section id="metodo-2-rao-hartley-cochran-rhc" class="level1">
-<h1>Metodo 2: Rao-Hartley-Cochran (RHC)</h1>
+<section id="página-2" class="level3">
+<h3 class="anchored" data-anchor-id="página-2">Página #2</h3>
+<p>La segunda página del .xlsx es la realización de la metodología, dividida de la siguiente manera:</p>
+<p><img src="images/paste-2.png" class="img-fluid"></p>
+<p>Una tabla principal donde se desarrolla el método paso a paso, calculando los <span class="math inline">\(\pi_k\)</span> de manera reiterada para cada selección de los individuos de inclusión forzosa y los correspondientes para las siguientes 2 “etapas” del método de Sunter.</p>
+<p><img src="images/paste-3.png" class="img-fluid"></p>
+<p>Una segunda tabla con la muestra final obtenida, con su respectiva <span class="math inline">\(y_k\)</span> y <span class="math inline">\(y_k/\pi_k\)</span>.</p>
+<p><img src="images/paste-5.png" class="img-fluid"></p>
+<p>La matriz calculada de los <span class="math inline">\(\pi_{kl}\)</span> usando 5 distintos colores correspondientes a las 5 distintas fórmulas generales del método y la suma correspondiente de los valores de la diagonal. (Esta matriz se aprecia de mejor manera en el archivo .xlsx descargable <a href="Método Sunter.xlxs" download="">acá</a>)</p>
+<p><img src="images/paste-6.png" class="img-fluid"></p>
+<p>Finalmente, tenemos casillas donde se ubicaron los valores finales de las estimaciones y un intervalo de confianza al 95%.</p>
+</section>
+</section>
+<section id="método-2-rao-hartley-cochran-rhc" class="level1">
+<h1>Método 2: Rao-Hartley-Cochran (RHC)</h1>
 <p>El archivo .r donde se realizó este método de muestreo se puede descargar directamente en el siguiente link -&gt; <a href="RHC.r" download="">RHC.r</a>, todo el código es igualmente explicado en este documento.</p>
-<p>Para el segundo método tomaremos, de nuevo, una muestra de 12 individuos basado en nuestro dataframe.</p>
+<p>Para el segundo método tomaremos, de nuevo, una muestra de 12 individuos basada en nuestro dataframe.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
@@ -152,7 +195,7 @@ Attaching package: 'dplyr'</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>n_muestra <span class="ot">&lt;-</span> <span class="dv">12</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>(Preliminares del archivo, se establecen las variables que vamos a usar y se fija el n)</p>
-<p>Se crea un vector de indices, con estos indices se establecran grupos aleatorios de tamaño similar:</p>
+<p>Se crea un vector de índices; con estos índices se establecerán grupos aleatorios de tamaño similar:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>indices <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(poblacion<span class="sc">$</span>id_municipio))  </span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -177,7 +220,7 @@ Attaching package: 'dplyr'</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>muestra_final <span class="ot">&lt;-</span> poblacion <span class="sc">%&gt;%</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(id_municipio <span class="sc">%in%</span> seleccionados) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Es asì como obtenemos nuestra muestra final del método RHC</p>
+<p>Es así como obtenemos nuestra muestra final del método RHC</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>muestra_final<span class="ot">&lt;-</span> muestra_final <span class="sc">%&gt;%</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id_municipio, nombre_municipio, poblacion_censo_2005, poblacion_censo_2018) </span>
@@ -198,7 +241,7 @@ Attaching package: 'dplyr'</code></pre>
 12           63            Túquerres                41205                44729</code></pre>
 </div>
 </div>
-<p>Con nuestra muestra podemos seguir la formulas de los estimadores de total y de varianza de esta forma:</p>
+<p>Con nuestra muestra podemos seguir las fórmulas de los estimadores de total y de varianza de esta forma:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> n_muestra</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -212,7 +255,7 @@ Attaching package: 'dplyr'</code></pre>
 <span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>error_estandar     <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(varianza_estimada)</span>
 <span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>cve                <span class="ot">&lt;-</span> (error_estandar <span class="sc">/</span> total_estimado) <span class="sc">*</span> <span class="dv">100</span>   </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Es asì que verificamos nuestros resultados:</p>
+<p>Es así que verificamos nuestros resultados:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>total_estimado</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -235,32 +278,40 @@ Attaching package: 'dplyr'</code></pre>
 <pre><code>[1] 1630592</code></pre>
 </div>
 </div>
-<p>Donde <code>sum(...)</code> nos indica el valor real publicado por el DANE</p>
+<p>Donde <code>sum(...)</code> nos indica el valor real publicado por el DANE.</p>
+<p>O comparado con el <span class="math inline">\(IC\)</span>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>IC_95 <span class="ot">&lt;-</span> total_estimado <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> <span class="fl">1.96</span> <span class="sc">*</span> error_estandar</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>IC_95  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  844608.4 2464366.8</code></pre>
+</div>
+</div>
 </section>
-<section id="método-3-metodo-acumulativo-total-mat" class="level1">
-<h1>Método 3: Metodo acumulativo Total (MAT)</h1>
+<section id="método-3-método-acumulativo-total-mat" class="level1">
+<h1>Método 3: Método acumulativo total (MAT)</h1>
 <p>El archivo .r donde se realizó este método de muestreo se puede descargar directamente en el siguiente link -&gt; <a href="MAT.r" download="">MAT.r</a>, todo el código es igualmente explicado en este documento.</p>
-<p>El método acumulativo total será nuestro último método para hallar una muestra de tamaño 12, sin embargo, los preliminares de este método en R son parecidos al metodo anterior:</p>
+<p>El método acumulativo total será nuestro último método para hallar una muestra de tamaño 12; sin embargo, los preliminares de este método en R son parecidos al método anterior:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"narino_poblacion_censo_2005_2018.csv"</span>)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">5</span>)</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">12</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"narino_poblacion_censo_2005_2018.csv"</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">5</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">12</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>(se usa <code>n &lt;- 12</code>al igual que en RHC pues será el tamaño de la muestra)</p>
+<p>(se usa <code>n &lt;- 12</code> al igual que en RHC, pues será el tamaño de la muestra)</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>tamano <span class="ot">&lt;-</span> datos<span class="sc">$</span>poblacion_censo_2005</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>intervalo <span class="ot">&lt;-</span> <span class="fu">sum</span>(tamano) <span class="sc">/</span> n</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>arranque <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> intervalo)</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>puntos <span class="ot">&lt;-</span> arranque <span class="sc">+</span> (<span class="dv">0</span><span class="sc">:</span>(n <span class="sc">-</span> <span class="dv">1</span>)) <span class="sc">*</span> intervalo</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>seleccion <span class="ot">&lt;-</span> <span class="fu">findInterval</span>(puntos, <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">cumsum</span>(tamano)), <span class="at">rightmost.closed =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>tamano <span class="ot">&lt;-</span> datos<span class="sc">$</span>poblacion_censo_2005</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>intervalo <span class="ot">&lt;-</span> <span class="fu">sum</span>(tamano) <span class="sc">/</span> n</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>arranque <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> intervalo)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>puntos <span class="ot">&lt;-</span> arranque <span class="sc">+</span> (<span class="dv">0</span><span class="sc">:</span>(n <span class="sc">-</span> <span class="dv">1</span>)) <span class="sc">*</span> intervalo</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>seleccion <span class="ot">&lt;-</span> <span class="fu">findInterval</span>(puntos, <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">cumsum</span>(tamano)), <span class="at">rightmost.closed =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Se crearon objetos <code>tamano intervalo arranque puntos</code> y <code>seleccion</code> para usar la funcion <code>findinterval</code> la cual determinara nuestra seleccion, tal que:</p>
+<p>Se crearon objetos <code>tamano</code>, <code>intervalo</code>, <code>arranque</code>, <code>puntos</code> y <code>seleccion</code> para usar la función <code>findInterval</code>, la cual determinará nuestra selección, tal que:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>muestra <span class="ot">&lt;-</span> datos[seleccion, , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>muestra<span class="ot">&lt;-</span> muestra[,<span class="fu">c</span>(<span class="st">"id_municipio"</span>, <span class="st">"nombre_municipio"</span>, <span class="st">"poblacion_censo_2005"</span>, <span class="st">"poblacion_censo_2018"</span>)]</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>muestra</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>muestra <span class="ot">&lt;-</span> datos[seleccion, , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>muestra<span class="ot">&lt;-</span> muestra[,<span class="fu">c</span>(<span class="st">"id_municipio"</span>, <span class="st">"nombre_municipio"</span>, <span class="st">"poblacion_censo_2005"</span>, <span class="st">"poblacion_censo_2018"</span>)]</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>muestra</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    id_municipio     nombre_municipio poblacion_censo_2005 poblacion_censo_2018
 1          52001                Pasto               383846               392930
@@ -277,44 +328,57 @@ Attaching package: 'dplyr'</code></pre>
 62         52835 San Andrés de Tumaco               161490               253637</code></pre>
 </div>
 </div>
-<p>Obteniendo asi nuestra muestra, con la cual calcularemos los estimados de total y varianza:</p>
+<p>Obteniendo así nuestra muestra, con la cual calcularemos los estimados de total y varianza:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>X_total <span class="ot">&lt;-</span> <span class="fu">sum</span>(datos<span class="sc">$</span>poblacion_censo_2005)</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>x_sel   <span class="ot">&lt;-</span> datos<span class="sc">$</span>poblacion_censo_2005[seleccion]</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>y_sel   <span class="ot">&lt;-</span> datos<span class="sc">$</span>poblacion_censo_2018[seleccion]</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>Z       <span class="ot">&lt;-</span> y_sel <span class="sc">/</span> (x_sel <span class="sc">/</span> X_total)   <span class="co"># y_i / p_i</span></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>total_estimado     <span class="ot">&lt;-</span> <span class="fu">mean</span>(Z)          <span class="co"># (1/n) * sum(Z)</span></span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>varianza_estimada  <span class="ot">&lt;-</span> <span class="fu">var</span>(Z) <span class="sc">/</span> n       <span class="co"># (1/(n(n-1))) * sum((Z - mean(Z))^2)</span></span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>error_estandar     <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(varianza_estimada)</span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>cve                <span class="ot">&lt;-</span> (error_estandar <span class="sc">/</span> total_estimado) <span class="sc">*</span> <span class="dv">100</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>X_total <span class="ot">&lt;-</span> <span class="fu">sum</span>(datos<span class="sc">$</span>poblacion_censo_2005)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>x_sel   <span class="ot">&lt;-</span> datos<span class="sc">$</span>poblacion_censo_2005[seleccion]</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>y_sel   <span class="ot">&lt;-</span> datos<span class="sc">$</span>poblacion_censo_2018[seleccion]</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>Z       <span class="ot">&lt;-</span> y_sel <span class="sc">/</span> (x_sel <span class="sc">/</span> X_total)   </span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>total_estimado     <span class="ot">&lt;-</span> <span class="fu">mean</span>(Z)          </span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>varianza_estimada  <span class="ot">&lt;-</span> <span class="fu">var</span>(Z) <span class="sc">/</span> n       </span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>error_estandar     <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(varianza_estimada)</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>cve                <span class="ot">&lt;-</span> (error_estandar <span class="sc">/</span> total_estimado) <span class="sc">*</span> <span class="dv">100</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Así, conseguimos nuestras estimaciones:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>total_estimado</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>total_estimado</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1463045</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>varianza_estimada</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>varianza_estimada</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 16024070998</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>error_estandar</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>error_estandar</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 126586.2</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>cve</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>cve</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 8.652246</code></pre>
 </div>
 </div>
-<p>Comparable con nuestro total real:</p>
+<p>Comparado con nuestro total real:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(datos<span class="sc">$</span>poblacion_censo_2018)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(datos<span class="sc">$</span>poblacion_censo_2018)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1630592</code></pre>
 </div>
 </div>
+<p>O con el <span class="math inline">\(IC\)</span>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>IC_95 <span class="ot">&lt;-</span> total_estimado <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> <span class="fl">1.96</span> <span class="sc">*</span> error_estandar</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>IC_95</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1214936 1711154</code></pre>
+</div>
+</div>
+</section>
+<section id="conclusiones-y-cierre" class="level1">
+<h1>Conclusiones y cierre:</h1>
+<p>Tras elegir y evaluar las muestras se encontró que: en cualquiera de las metodologías usadas, nuestros intervalos de confianza al 95% cumplieron al tener el total real del censo de Nariño dentro. De igual manera, se puede verificar las diferencias entre los CVE de cada método, siendo el método de Sunter el más complejo pero retornando a cambio un coeficiente notablemente más bajo que los otros.</p>
+<p>Se exploraron 3 alternativas, cada una con sus peculiaridades y muestras obtenidas distintas; al tiempo, estas se desarrollaron en 2 herramientas de análisis y visualización de datos como lo es R (y sus respectivos IDE) y Excel (o equivalentes), dando así una visión más general y práctica de los algoritmos de selección estudiados, aportando a la comprensión de los temas de manera didáctica y aplicada a datos reales.</p>
 </section>
 
 </main>
