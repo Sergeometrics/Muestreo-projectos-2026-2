@@ -122,11 +122,11 @@ window.Quarto = {
 <h1>Muestreos PPT - UNAL 2026-2</h1>
 <section id="integrantes" class="level2">
 <h2 class="anchored" data-anchor-id="integrantes">Integrantes:</h2>
-<section id="sergio-alejandro-buitrago-melo" class="level3">
-<h3 class="anchored" data-anchor-id="sergio-alejandro-buitrago-melo">Sergio Alejandro Buitrago Melo</h3>
+<section id="sergio-alejandro-buitrago-melo" class="level6">
+<h6 class="anchored" data-anchor-id="sergio-alejandro-buitrago-melo">Sergio Alejandro Buitrago Melo</h6>
 </section>
-<section id="camilo-andres-murcia-perdomo" class="level3">
-<h3 class="anchored" data-anchor-id="camilo-andres-murcia-perdomo">Camilo Andres Murcia Perdomo</h3>
+<section id="camilo-andres-murcia-perdomo" class="level6">
+<h6 class="anchored" data-anchor-id="camilo-andres-murcia-perdomo">Camilo Andres Murcia Perdomo</h6>
 </section>
 </section>
 </section>
@@ -138,11 +138,12 @@ window.Quarto = {
 <section id="método-1-sunter" class="level1">
 <h1>Método 1: Sunter</h1>
 <p>Como primer método se realizará el algoritmo de Sunter; para este método se eligió el formato .xlsx, puesto que este permite mayor facilidad al momento de mostrar gráficamente la matriz de probabilidades de inclusión de segundo orden creada. Sin código que explicar, se realizará un resumen del método repasando al mismo tiempo cómo se construyó el documento.</p>
-<p>El archivo .xlsx donde se realizó este método de muestreo se puede descargar directamente en el siguiente link --&gt; <a href="Método Sunter.xlxs" download="">Método Sunter.xlxs</a>, todo el procedimiento es igualmente explicado en este documento.</p>
+<p>El archivo .xlsx donde se realizó este método de muestreo se puede descargar directamente en el siguiente link –&gt; <a href="Método Sunter.xlsx" download="">Método Sunter.xlsx</a>, todo el procedimiento es igualmente explicado en este documento.</p>
 <p>El archivo se divide en 2 páginas: la primera es la base de datos de poblaciones de Nariño sin filtrar:</p>
 <section id="página-1" class="level3">
 <h3 class="anchored" data-anchor-id="página-1">Página #1</h3>
 <p><img src="images/paste-1.png" class="img-fluid"></p>
+<p>(Captura del documento. Página #1)</p>
 <p>Las variables a utilizar serán las poblaciones del censo 2005 y 2018.</p>
 </section>
 <section id="página-2" class="level3">
@@ -153,7 +154,7 @@ window.Quarto = {
 <p><img src="images/paste-3.png" class="img-fluid"></p>
 <p>Una segunda tabla con la muestra final obtenida, con su respectiva <span class="math inline">\(y_k\)</span> y <span class="math inline">\(y_k/\pi_k\)</span>.</p>
 <p><img src="images/paste-5.png" class="img-fluid"></p>
-<p>La matriz calculada de los <span class="math inline">\(\pi_{kl}\)</span> usando 5 distintos colores correspondientes a las 5 distintas fórmulas generales del método y la suma correspondiente de los valores de la diagonal. (Esta matriz se aprecia de mejor manera en el archivo .xlsx descargable <a href="Método Sunter.xlxs" download="">acá</a>)</p>
+<p>La matriz calculada de los <span class="math inline">\(\pi_{kl}\)</span> usando 5 distintos colores correspondientes a las 5 distintas fórmulas generales del método y la suma correspondiente de los valores de la diagonal. (Esta matriz se aprecia de mejor manera en el archivo .xlsx descargable <a href="Método Sunter.xlsx" download="">acá</a>)</p>
 <p><img src="images/paste-6.png" class="img-fluid"></p>
 <p>Finalmente, tenemos casillas donde se ubicaron los valores finales de las estimaciones y un intervalo de confianza al 95%.</p>
 </section>
@@ -379,6 +380,47 @@ Attaching package: 'dplyr'</code></pre>
 <h1>Conclusiones y cierre:</h1>
 <p>Tras elegir y evaluar las muestras se encontró que: en cualquiera de las metodologías usadas, nuestros intervalos de confianza al 95% cumplieron al tener el total real del censo de Nariño dentro. De igual manera, se puede verificar las diferencias entre los CVE de cada método, siendo el método de Sunter el más complejo pero retornando a cambio un coeficiente notablemente más bajo que los otros.</p>
 <p>Se exploraron 3 alternativas, cada una con sus peculiaridades y muestras obtenidas distintas; al tiempo, estas se desarrollaron en 2 herramientas de análisis y visualización de datos como lo es R (y sus respectivos IDE) y Excel (o equivalentes), dando así una visión más general y práctica de los algoritmos de selección estudiados, aportando a la comprensión de los temas de manera didáctica y aplicada a datos reales.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Método</th>
+<th style="text-align: right;">Total estimado</th>
+<th style="text-align: right;">Varianza estimada</th>
+<th style="text-align: right;">CVE</th>
+<th>IC 95%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Sunter</td>
+<td style="text-align: right;">1727163</td>
+<td style="text-align: right;">1409521290</td>
+<td style="text-align: right;">6.87%</td>
+<td>(1608453.0141662, 1845899.5916535)</td>
+</tr>
+<tr class="even">
+<td>RHC</td>
+<td style="text-align: right;">1654488</td>
+<td style="text-align: right;">170737270460</td>
+<td style="text-align: right;">24.97%</td>
+<td>(844608.417417482, 2464366.79223672)</td>
+</tr>
+<tr class="odd">
+<td>MAT</td>
+<td style="text-align: right;">1463045</td>
+<td style="text-align: right;">16024070998</td>
+<td style="text-align: right;">8.65%</td>
+<td>(1214935.70222712, 1711153.68314717)</td>
+</tr>
+</tbody>
+</table>
 </section>
 
 </main>

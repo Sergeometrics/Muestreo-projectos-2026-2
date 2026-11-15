@@ -2,9 +2,9 @@
 
 ## Integrantes:
 
-### Sergio Alejandro Buitrago Melo
+###### Sergio Alejandro Buitrago Melo
 
-### Camilo Andres Murcia Perdomo
+###### Camilo Andres Murcia Perdomo
 
 # Introducción:
 
@@ -16,13 +16,15 @@ Los datos sin modificaciones se pueden encontrar en los portales oficiales del D
 
 Como primer método se realizará el algoritmo de Sunter; para este método se eligió el formato .xlsx, puesto que este permite mayor facilidad al momento de mostrar gráficamente la matriz de probabilidades de inclusión de segundo orden creada. Sin código que explicar, se realizará un resumen del método repasando al mismo tiempo cómo se construyó el documento.
 
-El archivo .xlsx donde se realizó este método de muestreo se puede descargar directamente en el siguiente link -\-> <a href="Método Sunter.xlxs" download>Método Sunter.xlxs</a>, todo el procedimiento es igualmente explicado en este documento.
+El archivo .xlsx donde se realizó este método de muestreo se puede descargar directamente en el siguiente link --\> <a href="Método Sunter.xlsx" download>Método Sunter.xlsx</a>, todo el procedimiento es igualmente explicado en este documento.
 
 El archivo se divide en 2 páginas: la primera es la base de datos de poblaciones de Nariño sin filtrar:
 
 ### Página #1
 
 ![](images/paste-1.png)
+
+(Captura del documento. Página #1)
 
 Las variables a utilizar serán las poblaciones del censo 2005 y 2018.
 
@@ -40,7 +42,7 @@ Una segunda tabla con la muestra final obtenida, con su respectiva $y_k$ y $y_k/
 
 ![](images/paste-5.png)
 
-La matriz calculada de los $\pi_{kl}$ usando 5 distintos colores correspondientes a las 5 distintas fórmulas generales del método y la suma correspondiente de los valores de la diagonal. (Esta matriz se aprecia de mejor manera en el archivo .xlsx descargable <a href="Método Sunter.xlxs" download>acá</a>)
+La matriz calculada de los $\pi_{kl}$ usando 5 distintos colores correspondientes a las 5 distintas fórmulas generales del método y la suma correspondiente de los valores de la diagonal. (Esta matriz se aprecia de mejor manera en el archivo .xlsx descargable <a href="Método Sunter.xlsx" download>acá</a>)
 
 ![](images/paste-6.png)
 
@@ -225,3 +227,9 @@ IC_95
 Tras elegir y evaluar las muestras se encontró que: en cualquiera de las metodologías usadas, nuestros intervalos de confianza al 95% cumplieron al tener el total real del censo de Nariño dentro. De igual manera, se puede verificar las diferencias entre los CVE de cada método, siendo el método de Sunter el más complejo pero retornando a cambio un coeficiente notablemente más bajo que los otros.
 
 Se exploraron 3 alternativas, cada una con sus peculiaridades y muestras obtenidas distintas; al tiempo, estas se desarrollaron en 2 herramientas de análisis y visualización de datos como lo es R (y sus respectivos IDE) y Excel (o equivalentes), dando así una visión más general y práctica de los algoritmos de selección estudiados, aportando a la comprensión de los temas de manera didáctica y aplicada a datos reales.
+
+| Método | Total estimado | Varianza estimada | CVE | IC 95% |
+|---------------|--------------:|--------------:|--------------:|---------------|
+| Sunter | 1727163 | 1409521290 | 6.87% | (1608453.0141662, 1845899.5916535) |
+| RHC | 1654488 | 170737270460 | 24.97% | (844608.417417482, 2464366.79223672) |
+| MAT | 1463045 | 16024070998 | 8.65% | (1214935.70222712, 1711153.68314717) |
