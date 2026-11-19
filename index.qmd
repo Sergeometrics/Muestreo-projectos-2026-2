@@ -42,11 +42,17 @@ Una segunda tabla con la muestra final obtenida, con su respectiva $y_k$ y $y_k/
 
 ![](images/paste-5.png)
 
-La matriz calculada de los $\pi_{kl}$ usando 5 distintos colores correspondientes a las 5 distintas fórmulas generales del método y la suma correspondiente de los valores de la diagonal. (Esta matriz se aprecia de mejor manera en el archivo .xlsx descargable <a href="Método Sunter.xlsx" download>acá</a>)
+![](images/paste-10.png)
+
+![](images/paste-11.png)
+
+La matriz calculada de los $\pi_{K,L}$ usando 5 distintos colores correspondientes a las 5 distintas fórmulas generales del método y la suma correspondiente de los valores de la diagonal. (Esta matriz se aprecia de mejor manera en el archivo .xlsx descargable <a href="Método Sunter.xlsx" download>acá</a>) El archivo, Asímismo confirma la que la suma de nuestros $\pi_{K,L}$ nos dá como resultado 169 y la suma de los $\pi_{K}$ nos da exactamente nuestro $n$ indicado $n=13$
 
 ![](images/paste-6.png)
 
 Finalmente, tenemos casillas donde se ubicaron los valores finales de las estimaciones y un intervalo de confianza al 95%.
+
+Nota: el calculo de $\sum{\pi_K}$ se realizo con la primera columna de nuestra matriz de $\pi_{K,L}$ pues esta columna se entiende como la probabilidad de un individuo $K$ con inclusion forzosa y un individuo $L$ con probabilidad $\pi_L$ (es decir, $\pi_{K,L} = \pi_L$ dado que nuestro individuo $K$ es de inclusion forzosa)
 
 # Método 2: Rao-Hartley-Cochran (RHC)
 
